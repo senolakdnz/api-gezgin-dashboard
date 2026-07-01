@@ -1,5 +1,7 @@
 import requests
 
+planlanan_rotalar = []
+
 def get_weather_data(city, api_key):
     url=f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric&lang=tr"
 
@@ -39,28 +41,23 @@ def add_to_travelList(city):
         if response.status_code == 201:
             print(f"{city} icin seyahat planlamasi basariyla eklendi.")
             print(f"Sunucu Onay Kodu: {response.status_code} (Olusturuldu) | Kayit ID: {response.json()['id']}")
+            planlanan_rotalar.append(city)
     except Exception as e:
         print(f"Veri ekleme hatasi: {e}")
 
 def get_travelList():
-    url="https://jsonplaceholder.typicode.com/posts"
-    try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            plans=response.json()
-            print("--- Seyahat Planlari ---")
-
-            if not plans:
-                print("Seyahat planiniz bulunmamaktadir.")
-                return
-            for sira,plan in enumerate(plans,1):
-                print(f"{sira}. Rota: {plan["Title"]}")
-                print(f"   Aciklama: {plan['body']}")
-                print("-"*30)
-        else:
-            print(f"Veri cekme hatasi: {response.status_code}")
-    except Exception as e:
-        print(f"Veri cekme hatasi: {e}")
+    print("--- SEYAHAT PLANLAMA LİSTEMİZ ---")
+    
+    # Eğer listemiz boşsa kullanıcıyı bilgilendiriyoruz
+    if not planlanan_rotalar:
+        print("Henüz planlanmış bir seyahat rotanız bulunmuyor. Önce şehir ekleyin!")
+        return
+        
+    # Listemizde şehirler varsa sadece bizim eklediklerimizi sırayla basıyoruz
+    for sira, sehir_ismi in enumerate(planlanan_rotalar, 1):
+        print(f"{sira}. Rota: {sehir_ismi.upper()}")
+        print(f"   Aciklama: {sehir_ismi} seyahat planlama listeme basariyla eklendi.")
+        print("-" * 30)
 
 
 def main():
