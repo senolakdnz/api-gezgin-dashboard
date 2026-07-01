@@ -41,3 +41,28 @@ def add_to_travelList(city):
             print(f"Sunucu Onay Kodu: {response.status_code} (Olusturuldu) | Kayit ID: {response.json()['id']}")
     except Exception as e:
         print(f"Veri ekleme hatasi: {e}")
+
+
+def main():
+    api_key = "08be7741caf616ff4b1d27f4e83b17d5"
+    print("--- HOŞ GELDİNİZ ---")
+    while True:
+        secilen_sehir = input("Lutfen sehir adini giriniz (Cikis icin 'q' tusuna basin): ").strip()
+        if secilen_sehir.lower() == 'q':
+            print("Programdan cikiliyor...")
+            break
+        if not secilen_sehir:
+            print("Lutfen gecerli bir sehir adi giriniz.")
+            continue
+        basarili_Mi = get_weather_data(secilen_sehir, api_key)
+        if basarili_Mi:
+            cevap = input(f"{secilen_sehir} icin seyahat planlamasi yapmak ister misiniz? (E/H): ").strip().lower()
+            if cevap == 'e':
+                add_to_travelList(secilen_sehir)
+            elif cevap == 'h':
+                print("Seyahat planlamasi yapilmadi.")
+            else:
+                print("Gecersiz secim. Lutfen 'E' veya 'H' giriniz.")
+
+if __name__ == "__main__":  
+    main()
