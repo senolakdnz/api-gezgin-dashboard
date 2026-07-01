@@ -64,7 +64,7 @@ def main():
     api_key = "08be7741caf616ff4b1d27f4e83b17d5"
     print("--- HOŞ GELDİNİZ ---")
     while True:
-        secilen_sehir = input("Lutfen sehir adini giriniz (Cikis icin 'q' tusuna basin): ").strip()
+        secilen_sehir = input("Lutfen sehir adini giriniz (Cikis icin 'q' tusuna basin. Rota Listelemek Icin 'l' tusuna basin.): ").strip()
         if secilen_sehir.lower() == 'q':
             print("Programdan cikiliyor...")
             break
