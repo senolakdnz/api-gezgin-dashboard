@@ -1,4 +1,8 @@
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # .env dosyasını yükle
 
 planlanan_rotalar = []
 
@@ -85,7 +89,11 @@ def remove_from_travelList(city):
         print(f"Veri silme hatasi: {e}")
 
 def main():
-    api_key = "08be7741caf616ff4b1d27f4e83b17d5"
+    API_KEY = os.getenv("WEATHER_API_KEY")
+
+    if not API_KEY:
+        print("API anahtari bulunamadi. Lutfen .env dosyasini kontrol edin.")
+        return
     print("--- HOŞ GELDİNİZ ---")
     while True:
         secilen_sehir = input("Lutfen sehir adini giriniz (Cikis icin 'q' tusuna basin. Rota Listelemek Icin 'l' tusuna basin. Silmek Icin 's' tusuna basin. ): ").strip()
@@ -103,7 +111,7 @@ def main():
         if not secilen_sehir:
             print("Lutfen gecerli bir sehir adi giriniz.")
             continue
-        basarili_Mi = get_weather_data(secilen_sehir, api_key)
+        basarili_Mi = get_weather_data(secilen_sehir, API_KEY)
         if basarili_Mi:
             cevap = input(f"{secilen_sehir} icin seyahat planlamasi yapmak ister misiniz? (E/H): ").strip().lower()
             if cevap == 'e':
