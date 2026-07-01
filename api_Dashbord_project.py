@@ -45,26 +45,25 @@ def add_to_travelList(city):
         if response.status_code == 201:
             print(f"{city} icin seyahat planlamasi basariyla eklendi.")
             print(f"Sunucu Onay Kodu: {response.status_code} (Olusturuldu) | Kayit ID: {response.json()['id']}")
-            planlanan_rotalar.append(city)
+            planlanan_rotalar.append(city.strip().capitalize())
     except Exception as e:
         print(f"Veri ekleme hatasi: {e}")
 
 def get_travelList():
     print("--- SEYAHAT PLANLAMA LİSTEMİZ ---")
-    
-    # Eğer listemiz boşsa kullanıcıyı bilgilendiriyoruz
+
     if not planlanan_rotalar:
-        print("Henüz planlanmış bir seyahat rotanız bulunmuyor. Önce şehir ekleyin!")
+        print("Henüz planlanmis bir seyahat rotaniz bulunmuyor. Önce sehir ekleyin!")
         return
-        
-    # Listemizde şehirler varsa sadece bizim eklediklerimizi sırayla basıyoruz
+
     for sira, sehir_ismi in enumerate(planlanan_rotalar, 1):
         print(f"{sira}. Rota: {sehir_ismi.upper()}")
         print(f"   Aciklama: {sehir_ismi} seyahat planlama listeme basariyla eklendi.")
         print("-" * 30)
 
 def remove_from_travelList(city):
-    url = "https://jsonplaceholder.typicode.com/posts/1"
+    rota_id=1
+    url = f"https://jsonplaceholder.typicode.com/posts/{rota_id}"
     sehir_uyumlu = city.strip().lower()
     bulunan_sehir = None
 
@@ -94,7 +93,7 @@ def main():
     if not API_KEY:
         print("API anahtari bulunamadi. Lutfen .env dosyasini kontrol edin.")
         return
-    print("--- HOŞ GELDİNİZ ---")
+    print("--- HOS GELDINIZ ---")
     while True:
         secilen_sehir = input("Lutfen sehir adini giriniz (Cikis icin 'q' tusuna basin. Rota Listelemek Icin 'l' tusuna basin. Silmek Icin 's' tusuna basin. ): ").strip()
         if secilen_sehir.lower() == 'q':
