@@ -42,6 +42,26 @@ def add_to_travelList(city):
     except Exception as e:
         print(f"Veri ekleme hatasi: {e}")
 
+def get_travelList():
+    url="https://jsonplaceholder.typicode.com/posts"
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            plans=response.json()
+            print("--- Seyahat Planlari ---")
+
+            if not plans:
+                print("Seyahat planiniz bulunmamaktadir.")
+                return
+            for sira,plan in enumerate(plans,1):
+                print(f"{sira}. Rota: {plan["Title"]}")
+                print(f"   Aciklama: {plan['body']}")
+                print("-"*30)
+        else:
+            print(f"Veri cekme hatasi: {response.status_code}")
+    except Exception as e:
+        print(f"Veri cekme hatasi: {e}")
+
 
 def main():
     api_key = "08be7741caf616ff4b1d27f4e83b17d5"
@@ -51,6 +71,9 @@ def main():
         if secilen_sehir.lower() == 'q':
             print("Programdan cikiliyor...")
             break
+        if secilen_sehir.lower() == 'l':
+            get_travelList()
+            continue
         if not secilen_sehir:
             print("Lutfen gecerli bir sehir adi giriniz.")
             continue
