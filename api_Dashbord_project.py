@@ -59,17 +59,46 @@ def get_travelList():
         print(f"   Aciklama: {sehir_ismi} seyahat planlama listeme basariyla eklendi.")
         print("-" * 30)
 
+def remove_from_travelList(city):
+    url = "https://jsonplaceholder.typicode.com/posts/1"
+    sehir_uyumlu = city.strip().lower()
+    bulunan_sehir = None
+
+    for r in planlanan_rotalar:
+        if r.lower() == sehir_uyumlu:
+            bulunan_sehir = r
+            break
+    
+    if not bulunan_sehir:
+        print(f"{city} listede bulunamadi. Lutfen dogru sehir adini giriniz.")
+        return
+    
+    try:
+        response =requests.delete(url)
+        if response.status_code in [200,202,204]:
+            planlanan_rotalar.remove(bulunan_sehir)
+            print(f"{bulunan_sehir} listeden basariyla silindi.")
+            print(f"Sunucu Onay Kodu: {response.status_code} (Silindi)")
+        else:
+            print(f"Silme hatasi: Sunucu onay kodu {response.status_code}")
+    except Exception as e:
+        print(f"Veri silme hatasi: {e}")
 
 def main():
     api_key = "08be7741caf616ff4b1d27f4e83b17d5"
     print("--- HOŞ GELDİNİZ ---")
     while True:
-        secilen_sehir = input("Lutfen sehir adini giriniz (Cikis icin 'q' tusuna basin. Rota Listelemek Icin 'l' tusuna basin.): ").strip()
+        secilen_sehir = input("Lutfen sehir adini giriniz (Cikis icin 'q' tusuna basin. Rota Listelemek Icin 'l' tusuna basin. Silmek Icin 's' tusuna basin. ): ").strip()
         if secilen_sehir.lower() == 'q':
             print("Programdan cikiliyor...")
             break
         if secilen_sehir.lower() == 'l':
             get_travelList()
+            continue
+        if secilen_sehir.lower() == 's':
+            silinecek_sehir = input("Lutfen silmek istediginiz sehir adini giriniz: ").strip()
+            if silinecek_sehir:
+                remove_from_travelList(silinecek_sehir)
             continue
         if not secilen_sehir:
             print("Lutfen gecerli bir sehir adi giriniz.")

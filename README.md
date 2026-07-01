@@ -10,6 +10,7 @@ Uygulama, hem harici REST API'lerden veri çekme (**GET**) hem de sunucuya veri 
 - **Güvenlik ve Kimlik Doğrulama:** Gerçek dünya senaryolarına uygun olarak **API Key** kullanımını barındırır.
 - **Hata Yönetimi (Error Handling):** `try-except` blokları sayesinde internet kesintileri veya hatalı şehir girişlerinde uygulamanın çökmesini engeller, kullanıcıya anlamlı uyarılar gösterir.
 - **Seyahat Planlama & Listeleme (POST & Yerel Hafıza):** Kullanıcının seyahat etmek istediği şehirleri [JSONPlaceholder API](https://jsonplaceholder.typicode.com/) kullanarak bulut sunucuya gönderir ve başarılı (`201 Created`) yanıtı aldığında yerel hafızaya kaydederek listeler.
+- **Seyahat Rotası Silme (DELETE & Yerel Hafıza):** Kullanıcının vazgeçtiği rotaları JSONPlaceholder API'sine DELETE isteği atarak simüle eder ve başarı durumunda yerel listeden tamamen kaldırır.
 
 ## 🛠️ Kullanılan Teknolojiler
 
