@@ -24,3 +24,20 @@ def get_weather_data(city, api_key):
     except requests.exceptions.ConnectionError:
         print("Baglanti hatasi. Lutfen internet baglantinizi kontrol edin.")
         return False
+
+
+def add_to_travelList(city):
+    url="https://jsonplaceholder.typicode.com/posts"
+    kargo = {
+        "title": "Yeni Seyahat Rotasi",
+        "body": f"{city} icin seyahat planlama basariyla eklendi.",
+        "userId": 1
+    }
+
+    try:
+        response = requests.post(url, json=kargo)
+        if response.status_code == 201:
+            print(f"{city} icin seyahat planlamasi basariyla eklendi.")
+            print(f"Sunucu Onay Kodu: {response.status_code} (Olusturuldu) | Kayit ID: {response.json()['id']}")
+    except Exception as e:
+        print(f"Veri ekleme hatasi: {e}")
